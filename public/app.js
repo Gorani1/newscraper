@@ -1,3 +1,7 @@
+$(document).ready(function() {
+
+
+
 // Grab the questions as a json
 $.getJSON("/articles", function(data) {
     // For each one
@@ -69,4 +73,25 @@ $.getJSON("/articles", function(data) {
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
+  });
+
+    // Whenever someone clicks a li tag
+    $(document).on("click", "#submit", function(event) {
+
+      event.preventDefault();
+      var searchInput = $("#search-input").val();
+
+      console.log(searchInput);
+      
+      $.ajax({
+        method: "GET",
+        url: "/search",
+        data: {search: searchInput}
+      })
+        // With that done, add the note information to the page
+      .then(function(data) {
+
+        });
+    });
+
   });

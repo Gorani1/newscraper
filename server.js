@@ -99,6 +99,21 @@ app.get("/scrape", function(req, res) {
   });
 });
 
+app.get("/search", function(req, res) {
+  const searchQuery = req.query.search;
+
+  db.Article.find({headline: new RegExp(searchQuery, "i")})
+    // Throw any errors to the console
+    .then(function(dbPopulate) {
+      // If any Libraries are found, send them to the client with any associated Books
+      res.json(dbPopulate);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
